@@ -19,7 +19,7 @@ static const char * Base_calls_names[] = {
 static struct obj_desc Base_desc (Base_name, Base_calls_names, Base_calls_desc, 3);
 
 enum __i_Base { 
-    Magic,
+    Magic0,
     DESTRUCTOR0,
     DESTRUCTOR1,
 };

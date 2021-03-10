@@ -82,7 +82,7 @@ void * after_call_method(void * a,
     /*  */
     
     if (o->desc->name == Base_name){
-        if (i == __i_Base::Magic){
+        if (i == __i_Base::Magic0){
             a = (void *) ((int64_t) a / 10);
             fprintf(stderr, "@ << %s::%s, changed ret = %ld\n",
                  o->desc->name, o->desc->calls_names[i], (int64_t)a);

@@ -45,6 +45,7 @@ vtable(){
     echo "enum __i_${CLASS_NAME} { " > vtable.enum
 
     I=0
+    D=0
     N=$(cat vtable.tmp | grep "^ " | wc -l)
 
     cat vtable.tmp | grep "^ " | sed 's/^[^|]*| //' | while read l; do
@@ -53,11 +54,12 @@ vtable(){
         echo "    \"$l\","
         
         if [ "$name" == "~$CLASS_NAME" ]; then
-            echo "    DESTRUCTOR$I," >> vtable.enum
-            I=$(($i+1))
-            continue
+            echo "    DESTRUCTOR$D," >> vtable.enum
+            D=$(($D+1))
+        else
+            echo "    $name$I," >> vtable.enum
         fi
-        echo "    $name," >> vtable.enum
+        I=$(($I+1))
     done
 
     echo -e "};\n"
