@@ -103,13 +103,11 @@ echo -e "\n   [ NORMAL RUN ]\n"
 echo -e "\n   [ LD_PRELOAD inject.so RUN ]\n"
 
 if [ $LOADONFLY -eq 1 ]; then
-    mkdir test.tmp
+    [ ! -d "test.tmp" ] && mkdir test.tmp
     cd test.tmp
-    ln -s ../inject.so lib.so
+    [ ! -f "lib.so" ] && ln -s ../inject.so lib.so
     LD_PRELOAD=../inject.so:../lib.so ../test
-    rm lib.so
     cd ..
-    rmdir test.tmp
 else
     LD_PRELOAD=./inject.so ./test
 fi
