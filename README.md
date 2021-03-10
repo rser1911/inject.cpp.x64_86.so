@@ -13,7 +13,7 @@ lib.cpp - realisation of test library
 main.cpp - usage test library
 
 do - main script for building and generation inject.h
-edb - script for debuging (for LOADONFLY=0)
+edb - script for debuging
 Makefile - call do script
 ```
 
@@ -40,7 +40,7 @@ Magic() = 100500
 ~ Derived
 ~ Base
 
-   [ LD_PRELOAD inject.so RUN ]
+   [ inject.so RUN ]
 
 @ > FactoryBase [1] --- EXPORT Base* FactoryBase();
 @ < FactoryBase [1], ret = 93935177876256

@@ -104,6 +104,7 @@ struct obj{
 static std::map <void *, struct obj *> p2obj;
 static std::stack <void *> retaddr;
 static void ** vtable_arr = NULL;
+static void * lib_handle = NULL;
 
 extern "C" void * retaddr_load(){
     void *p = retaddr.top();
@@ -156,7 +157,8 @@ void fix_ZERO_COUNTER(){};
     __init_##name(void) {                                             \
         func_names->push_back(#name);                                 \
         func_desc->push_back(desc);                                   \
-        func_calls->push_back(NULL);                                  \
+        /*func_calls->push_back(NULL);*/                              \
+        func_calls->push_back(dlsym(lib_handle, #name));              \
     }                                                                 \
     void fix_##name(){};  /* FIXME */          
 
@@ -177,6 +179,7 @@ void __attribute__((constructor)) __init(void) {
     func_desc->push_back(NULL);
     func_calls = new std::vector <void *> ();
     func_calls->push_back(NULL);
+    lib_handle = dlopen("../lib.so", RTLD_NOW | RTLD_GLOBAL);
 }
 
 struct obj * hook_object(void * p, struct obj_desc * desc){
@@ -215,13 +218,8 @@ extern "C" void * vtable_find_addr(void * a, void * b, void * c,
     if (i < 0){ // functions
         i = i + ZERO_COUNTER;
         jmp = func_calls->at(-i);
-        
-        if (jmp == NULL){
-           jmp = (void *) dlsym(RTLD_NEXT, func_names->at(-i)); 
-           func_calls->at(-i) = jmp;
-        }
-        
         res = before_call_func(a, b, c, d, e, f, -i);
+        
         if (res != NULL) return res;
     } else {    // methods
         struct obj * o = p2obj[a];
