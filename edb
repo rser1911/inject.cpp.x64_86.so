@@ -1,2 +1,2 @@
 cd test.tmp 
-edb --run ./test
+edb --run ../test
