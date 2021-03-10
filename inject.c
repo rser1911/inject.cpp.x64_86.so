@@ -17,7 +17,6 @@ asm (R"(
     after_ret:
     
     push   %r12
-    # push   %rax
     push   %rdx
     subq   $16, %rsp
     movdqu %xmm0, (%rsp)
@@ -36,7 +35,6 @@ asm (R"(
     movdqu (%rsp),%xmm0
     addq   $16, %rsp
     pop    %rdx
-    # pop    %rax
     pop    %r12
     
     push    %rdi # ret
