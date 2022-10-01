@@ -43,18 +43,18 @@ Magic() = 100500
    [ inject.so RUN ]
 
 @ > FactoryBase [1] --- EXPORT Base* FactoryBase();
-@ < FactoryBase [1], ret = 93935177876256
+@ < FactoryBase [1], ret = 0x55e96d881320
 @ << HOOKED Base object
-@ > Base::Magic [0] --- int Base::Magic()
-@ > Base::UNKNOWN [3] --- ???
+@ > Base::Magic [0] --- int Base::Magic(), obj = 0x55e96d881320
+@ > Base::UNKNOWN [3] --- ???, obj = 0x55e96d881320
 @ < Base::UNKNOWN [3 = One], ret = 10
-@ < Base::Magic [0], ret = 1005000
+@ < Base::Magic [0], ret = 1005000, obj = 0x55e96d881320
 @ << Base::Magic, changed ret = 100500
 Magic() = 100500
-@ > Base::~Base [2] --- Base::~Base() [deleting]
+@ > Base::~Base [2] --- Base::~Base() [deleting], obj = 0x55e96d881320
 ~ Derived
 ~ Base
-@ < Base::~Base [2], ret = 0
+@ < Base::~Base [2], ret = 0, obj = 0x55e96d881320
 @ << UNHOOKED Base object
 
 ```
