@@ -14,7 +14,7 @@ void * before_call_func(void * a, void * b, void * c,
 void * after_call_func(void * a, 
                        int64_t i){
                            
-    fprintf(stderr, "@ < %s [%ld], ret = %ld\n", func_names->at(i), i, (int64_t)a);
+    fprintf(stderr, "@ < %s [%ld], ret = %p\n", func_names->at(i), i, a);
     
     /*  */
     
@@ -48,10 +48,10 @@ void * before_call_method(void * a, void * b, void * c,
         fprintf(stderr, "@ > %s::%s [%ld]", 
             o->desc->name, o->desc->calls_names[i], i);
         fprintf(stderr, " --- %s", o->desc->calls_desc[i]);
-        fprintf(stderr, "\n");
+        fprintf(stderr, ", obj = %p\n", o->object);
     }else{
         fprintf(stderr, "@ > %s::UNKNOWN [%ld]", o->desc->name, i);
-        fprintf(stderr, " --- ???\n");
+        fprintf(stderr, " --- ???, obj = %p\n", o->object);
     }
 
     /*  */
@@ -72,11 +72,11 @@ void * after_call_method(void * a,
                          struct obj * o, int64_t i){
     
     if (i < o->desc->calls_num){
-        fprintf(stderr, "@ < %s::%s [%ld], ret = %ld\n",
-            o->desc->name, o->desc->calls_names[i], i, (int64_t)a);
+        fprintf(stderr, "@ < %s::%s [%ld], ret = %ld, obj = %p\n",
+            o->desc->name, o->desc->calls_names[i], i, (int64_t)a, o->object);
     }else{
-        fprintf(stderr, "@ < %s::UNKNOWN [%ld], ret = %ld\n",
-            o->desc->name, i, (int64_t)a);
+        fprintf(stderr, "@ < %s::UNKNOWN [%ld], ret = %ld, obj = %p\n",
+            o->desc->name, i, (int64_t)a, o->object);
     }
     
     /*  */
